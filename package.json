@@ -1,5 +1,5 @@
 {
-  "name": "quill-delta",
+  "name": "@shortwave/quill-delta",
   "version": "4.2.2",
   "description": "Format for representing rich text documents and changes.",
   "author": "Jason Chen <jhchen7@gmail.com>",
@@ -65,9 +65,12 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/quilljs/delta"
+    "url": "https://github.com/shortwave/delta"
   },
   "bugs": {
     "url": "https://github.com/quilljs/delta/issues"
