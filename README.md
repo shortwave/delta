@@ -6,6 +6,15 @@ A Delta is made up of an [Array](https://developer.mozilla.org/en-US/docs/Web/Ja
 
 Don’t be confused by its name Delta&mdash;Deltas represents both documents and changes to documents. If you think of Deltas as the instructions from going from one document to another, the way Deltas represent a document is by expressing the instructions starting from an empty document.
 
+## Releases
+
+To make a release preform the following steps:
+
+```shell
+# Edit version in package.json
+npm pack
+gh release create $VERSION shortwave-quill-delta-$VERSION.tgz
+```
 
 ## Quick Example
 
