@@ -1,11 +1,31 @@
-import Op from './Op';
+import AttributeMap from "./AttributeMap";
+
+// Don't import op directly to prevent circular errors.
+interface OpLike {
+  // only one property out of {insert, delete, retain} will be present
+  insert?: string | object;
+  delete?: number;
+  retain?: number;
+
+  attributes?: AttributeMap;
+}
+// Don't import from op directly to prevent circular errors.
+function computeOpLength(op: OpLike): number {
+  if (typeof op.delete === 'number') {
+    return op.delete;
+  } else if (typeof op.retain === 'number') {
+    return op.retain;
+  } else {
+    return typeof op.insert === 'string' ? op.insert.length : 1;
+  }
+}
 
 export default class Iterator {
-  ops: Op[];
+  ops: OpLike[];
   index: number;
   offset: number;
 
-  constructor(ops: Op[]) {
+  constructor(ops: OpLike[]) {
     this.ops = ops;
     this.index = 0;
     this.offset = 0;
@@ -15,14 +35,14 @@ export default class Iterator {
     return this.peekLength() < Infinity;
   }
 
-  next(length?: number): Op {
+  next(length?: number): OpLike {
     if (!length) {
       length = Infinity;
     }
     const nextOp = this.ops[this.index];
     if (nextOp) {
       const offset = this.offset;
-      const opLength = Op.length(nextOp);
+      const opLength = computeOpLength(nextOp);
       if (length >= opLength - offset) {
         length = opLength - offset;
         this.index += 1;
@@ -33,7 +53,7 @@ export default class Iterator {
       if (typeof nextOp.delete === 'number') {
         return { delete: length };
       } else {
-        const retOp: Op = {};
+        const retOp: OpLike = {};
         if (nextOp.attributes) {
           retOp.attributes = nextOp.attributes;
         }
@@ -52,14 +72,14 @@ export default class Iterator {
     }
   }
 
-  peek(): Op {
+  peek(): OpLike {
     return this.ops[this.index];
   }
 
   peekLength(): number {
     if (this.ops[this.index]) {
       // Should never return 0 if our index is being managed correctly
-      return Op.length(this.ops[this.index]) - this.offset;
+      return computeOpLength(this.ops[this.index]) - this.offset;
     } else {
       return Infinity;
     }
@@ -78,7 +98,7 @@ export default class Iterator {
     return 'retain';
   }
 
-  rest(): Op[] {
+  rest(): OpLike[] {
     if (!this.hasNext()) {
       return [];
     } else if (this.offset === 0) {
