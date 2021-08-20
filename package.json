@@ -30,6 +30,9 @@
     "dist",
     "src"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
@@ -66,9 +69,6 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
