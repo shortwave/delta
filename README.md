@@ -11,9 +11,7 @@ Don’t be confused by its name Delta&mdash;Deltas represents both documents and
 To make a release preform the following steps:
 
 ```shell
-# Edit version in package.json
-npm pack
-gh release create $VERSION shortwave-quill-delta-$VERSION.tgz
+npm run relase
 ```
 
 ## Quick Example
