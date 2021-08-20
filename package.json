@@ -1,6 +1,6 @@
 {
   "name": "@shortwave/quill-delta",
-  "version": "4.2.3",
+  "version": "4.2.4",
   "description": "Format for representing rich text documents and changes.",
   "author": "Jason Chen <jhchen7@gmail.com>",
   "homepage": "https://github.com/quilljs/delta",
