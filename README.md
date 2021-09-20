@@ -1,4 +1,4 @@
-# Delta [![Build Status](https://travis-ci.org/quilljs/delta.svg?branch=master)](http://travis-ci.org/quilljs/delta) [![Coverage Status](https://img.shields.io/coveralls/quilljs/delta.svg)](https://coveralls.io/r/quilljs/delta)
+# Delta [![Build Status](https://github.com/quilljs/delta/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/quilljs/delta/actions?query=branch%3Amaster) [![Coverage Status](https://img.shields.io/coveralls/quilljs/delta.svg)](https://coveralls.io/r/quilljs/delta)
 
 Deltas are a simple, yet expressive format that can be used to describe contents and changes. The format is JSON based, and is human readable, yet easily parsible by machines. Deltas can describe any rich text document, includes all text and formatting information, without the ambiguity and complexity of HTML.
 
@@ -26,16 +26,16 @@ const delta = new Delta([
 ]);
 
 // Change intended to be applied to above:
-// Keep the first 12 characters, delete the next 4,
-// and insert a white 'White'
+// Keep the first 12 characters, insert a white 'White'
+// and delete the next four characters ('Grey')
 const death = new Delta().retain(12)
-                         .delete(4)
-                         .insert('White', { color: '#fff' });
+                         .insert('White', { color: '#fff' })
+                         .delete(4);
 // {
 //   ops: [
 //     { retain: 12 },
-//     { delete: 4 },
-//     { insert: 'White', attributes: { color: '#fff' } }
+//     { insert: 'White', attributes: { color: '#fff' } },
+//     { delete: 4 }
 //   ]
 // }
 
@@ -379,7 +379,7 @@ Returned an inverted delta that has the opposite effect of against a base docume
 ```js
 const base = new Delta().insert('Hello\n')
                         .insert('World');
-const delta = new Delta().retain(6, { bold: true }).delete(5).insert('!');
+const delta = new Delta().retain(6, { bold: true }).insert('!').delete(5);
 
 const inverted = delta.invert(base);  // { ops: [
                                       //   { retain: 6, attributes: { bold: null } },
