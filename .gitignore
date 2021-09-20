@@ -4,3 +4,4 @@
 /node_modules
 npm-debug.log
 shortwave-quill-delta-*.tgz
+/.nyc_output
